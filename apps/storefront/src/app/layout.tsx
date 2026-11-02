@@ -4,6 +4,7 @@ import "./cart.css";
 import "./watermark.css";
 import "./design-preview.css";
 import "./styles-extra.css";
+import "./storefront-pages.css";
 
 export const metadata: Metadata = {
   title: "Vinay Colour Lab and Photo Studio | Turn moments into keepsakes",
