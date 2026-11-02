@@ -1,0 +1,1 @@
+.preview-watermark{position:absolute;inset:43% -12%;height:18px;transform:rotate(-28deg);display:grid;place-items:center;background:#243a3045;color:#fff;font:7px var(--mono);letter-spacing:.15em;pointer-events:none}

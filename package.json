@@ -1,0 +1,20 @@
+{
+  "name": "photo-studio-platform",
+  "version": "0.1.0",
+  "private": true,
+  "workspaces": ["apps/*", "packages/*"],
+  "scripts": {
+    "dev": "npm run build --workspace @studio/shared && concurrently -k -n storefront,api -c cyan,magenta \"npm run dev:storefront\" \"npm run dev:api\"",
+    "dev:storefront": "npm --workspace @studio/storefront run dev",
+    "dev:api": "npm --workspace @studio/api run dev",
+    "dev:admin": "npm --workspace @studio/admin run dev",
+    "dev:worker": "npm --workspace @studio/worker run dev",
+    "build": "npm run build --workspace @studio/shared && npm run build --workspace @studio/image-renderer && npm run build --workspace @studio/storefront && npm run build --workspace @studio/admin && npm run build --workspace @studio/api && npm run build --workspace @studio/worker",
+    "typecheck": "npm run build --workspace @studio/shared && npm run typecheck --workspace @studio/api && npm run typecheck --workspace @studio/worker && npm run typecheck --workspace @studio/storefront && npm run typecheck --workspace @studio/admin && npm run typecheck --workspace @studio/image-renderer",
+    "test:pricing": "npm run build --workspace @studio/shared && node --test packages/shared/test/pricing.test.mjs",
+    "test:renderer": "npm run build --workspace @studio/image-renderer && node --test packages/image-renderer/test/rendering.test.mjs",
+    "test:payments": "npm run build --workspace @studio/api && node --test apps/api/test/payment.test.mjs",
+    "test": "npm run test:pricing && npm run test:renderer && npm run test:payments"
+  },
+  "devDependencies": { "concurrently": "^9.2.1", "typescript": "^5.9.3" }
+}
