@@ -701,9 +701,15 @@ app.get("/api/v1/cart", requireGuest, async (req, res, next) => {
     const items = (cart?.items ?? []) as Array<Record<string, unknown>>;
     const ownerId = (req as GuestRequest).guestUserId!;
     const customizationIds = items.map((item) => item.customizationId).filter((id): id is Types.ObjectId => id instanceof Types.ObjectId);
+    const customizations = await CustomizationDocument.find({ _id: { $in: customizationIds }, customerId: ownerId }).select("_id document").lean().exec() as unknown as Array<{ _id: Types.ObjectId; document: { transform?: { zoom?: number; rotation?: number; positionX?: number; positionY?: number } } }>;
+    const customizationById = new Map(customizations.map((entry) => [entry._id.toString(), entry.document.transform]));
     const previews = await PreviewAsset.find({ ownerId, customizationId: { $in: customizationIds } }).select("customizationId storageKey").lean().exec() as unknown as Array<{ customizationId: Types.ObjectId; storageKey: string }>;
     const previewByCustomization = new Map(await Promise.all(previews.map(async (preview) => [preview.customizationId.toString(), await new R2PrivateAssetStorage().createSignedReadUrl(preview.storageKey, 300)] as const)));
-    return res.json({ currency: "INR", items: items.map((item) => ({ ...item, id: String(item._id), price: Number(item.priceSnapshotPaise ?? 0) / 100, previewUrl: item.customizationId instanceof Types.ObjectId ? previewByCustomization.get(item.customizationId.toString()) : undefined })) });
+    return res.json({ currency: "INR", items: items.map((item) => {
+      const customizationId = item.customizationId instanceof Types.ObjectId ? item.customizationId.toString() : "";
+      const transform = customizationById.get(customizationId);
+      return { ...item, id: String(item._id), sourceAssetId: item.sourceAssetId instanceof Types.ObjectId ? item.sourceAssetId.toString() : undefined, customization: transform ? { zoom: transform.zoom ?? 1, rotation: transform.rotation ?? 0, horizontal: (transform.positionX ?? 0.5) * 100, vertical: (transform.positionY ?? 0.5) * 100 } : undefined, price: Number(item.priceSnapshotPaise ?? 0) / 100, previewUrl: item.customizationId instanceof Types.ObjectId ? previewByCustomization.get(item.customizationId.toString()) : undefined };
+    }) });
   } catch (error) { next(error); }
 });
 
@@ -735,7 +741,7 @@ app.post("/api/v1/cart/items", requireSameOrigin, requireGuest, async (req, res,
     const item = { _id: new Types.ObjectId(), category: config.category, size: config.size, material: config.material, mug: config.mug, aiRestoreConsent: config.category === "restoration" && parsed.data.aiRestoreConsent, quantity: 1, priceSnapshotPaise: quote.totalPaise, sourceAssetId: source._id, customizationId: customizationRecord._id, createdAt: new Date() };
     await Cart.updateOne({ customerId: guestId }, { $setOnInsert: { customerId: guestId, expiresAt: new Date(Date.now() + SESSION_TTL_MS) }, $push: { items: item } }, { upsert: true });
     const itemResponse = item as typeof item & { _id?: Types.ObjectId };
-    return res.status(201).json({ item: { ...itemResponse, id: itemResponse._id?.toString(), price: quote.totalPaise / 100, previewUrl }, quote: { currency: "INR", ...quote } });
+    return res.status(201).json({ item: { ...itemResponse, id: itemResponse._id?.toString(), sourceAssetId: source._id.toString(), customization, price: quote.totalPaise / 100, previewUrl }, quote: { currency: "INR", ...quote } });
   } catch (error) { next(error); }
 });
 

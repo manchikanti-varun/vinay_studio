@@ -72,14 +72,13 @@ footer{background:#153c31}.footer-main{min-height:210px}.footer-main>p{font-size
 .starting-price{display:block;margin-top:10px;font:10px var(--mono);letter-spacing:.04em;color:#526c59}
 @media(max-width:600px){.starting-price{font-size:8px;margin-top:7px}}
 
-/* Bag and checkout presentation */
+/* Guest bag presentation */
 .bag-overlay{background:rgba(16,28,22,.48);backdrop-filter:blur(2px)}
 .bag-drawer{width:min(520px,100%);padding:30px 30px 34px;background:#fffefa;box-shadow:-16px 0 48px #10231b24}
 .bag-heading{padding-bottom:21px;border-color:#e3e4db}.bag-heading .eyebrow{font-size:10px;letter-spacing:.14em}.bag-heading h2{font-size:32px;letter-spacing:-.03em}.bag-heading h2 span{font:15px var(--sans);color:#7b867d}.bag-heading>button{width:38px;height:38px;border-color:#daddd4;font-size:24px}
 .bag-items article{grid-template-columns:78px 1fr auto;gap:15px;padding:19px 0;border-color:#eceee8}.bag-thumb{width:78px;height:88px;background-position:center;background-size:cover}.bag-items article b{font:17px var(--serif)}.bag-items article small{font-size:11px;color:#78837b}.bag-items article strong{font-size:17px}.bag-items article>button{font-size:10px;padding:8px 3px}
-.bag-total{padding:22px 0 9px;font-size:14px}.bag-total b{font-size:26px}.checkout-note{font-size:12px;padding:15px;line-height:1.65;color:#5d6e63;background:#f2f4ef}.whatsapp-order{padding:16px;font-size:13px;margin-top:15px}.secondary-contact{border:1px solid #dce4dc;background:#f5f6f2;color:#345441}.bag-empty{padding:110px 20px}.bag-empty>span{font-size:35px}.bag-empty h3{font-size:24px}.bag-empty p{font-size:14px;line-height:1.7;max-width:290px}
-.checkout-form{padding:21px;margin-top:20px;gap:13px;border-color:#e2e6de;background:#fff}.checkout-form>.eyebrow{font-size:10px}.checkout-form label{font:10px var(--mono);letter-spacing:.08em;color:#65736a}.checkout-form label>span{font-size:8px}.checkout-form input{padding:12px;font:13px var(--sans);border-color:#dfe3dc}.checkout-total{padding-top:15px;font-size:12px}.checkout-total b{font-weight:600}.checkout-form .whatsapp-order{font-size:13px;padding:16px}.secure-note{font-size:10px;line-height:1.6}
-@media(max-width:600px){.bag-drawer{padding:20px 17px 26px}.bag-items article{grid-template-columns:64px 1fr auto;gap:11px}.bag-thumb{width:64px;height:74px}.bag-items article b{font-size:15px}.bag-items article small{font-size:10px}.bag-total b{font-size:23px}.checkout-form{padding:15px}.bag-empty{padding:80px 12px}}
+.bag-total{padding:22px 0 9px;font-size:14px}.bag-total b{font-size:26px}.bag-note{font-size:12px;padding:15px;line-height:1.65;color:#5d6e63;background:#f2f4ef}.whatsapp-order{padding:16px;font-size:13px;margin-top:15px}.secondary-contact{border:1px solid #dce4dc;background:#f5f6f2;color:#345441}.bag-empty{padding:110px 20px}.bag-empty>span{font-size:35px}.bag-empty h3{font-size:24px}.bag-empty p{font-size:14px;line-height:1.7;max-width:290px}
+@media(max-width:600px){.bag-drawer{padding:20px 17px 26px}.bag-items article{grid-template-columns:64px 1fr auto;gap:11px}.bag-thumb{width:64px;height:74px}.bag-items article b{font-size:15px}.bag-items article small{font-size:10px}.bag-total b{font-size:23px}.bag-empty{padding:80px 12px}}
 
 /* Collection landing pages */
 .category-page{min-height:100vh;background:var(--paper);color:var(--ink)}
