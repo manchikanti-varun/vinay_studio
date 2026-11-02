@@ -1,10 +1,10 @@
 import type { Metadata } from "next";
 import "./styles.css";
-import "./styles-extra.css";
 import "./cart.css";
 import "./watermark.css";
 import "./checkout.css";
 import "./design-preview.css";
+import "./styles-extra.css";
 
 export const metadata: Metadata = {
   title: "Vinay Colour Lab and Photo Studio | Turn moments into keepsakes",
